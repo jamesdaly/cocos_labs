@@ -1,5 +1,6 @@
 #include "LogoScene.h"
 #include "IntroMenuScene.h"
+#include "SingletonSample.h"
 
 bool LogoScene::init()
 {
@@ -18,7 +19,20 @@ bool LogoScene::init()
 	//active scene
 	this->addChild(mp_oMainLayer);
 
+
+	//adding mainlayer as child
+	SingletonSample::getInstance()->storeObject(mp_oMainLayer);
+
+	
+
+
+
+
 	logoFadeInOut();
+
+	
+
+	int i = 1;
 
 }
 
@@ -26,9 +40,18 @@ void LogoScene::logoFadeInOut()
 {
 	//create the logo to fade in and out
 	mp_oLitLogo = CCSprite::create("lit.png");
-	mp_oMainLayer->addChild(mp_oLitLogo);
+	//mp_oMainLayer->addChild(mp_oLitLogo);
+	
+	((CCLayer*)(SingletonSample::getInstance()->getStoredObject()))->addChild(mp_oLitLogo);
 
 	mp_oLitLogo->setPosition(ccp(m_fScreenWidth/2, m_fScreenHeight/2));
+
+
+	//casting example
+	CCNode* nodeVersionOfMainLayer = mp_oMainLayer;
+
+	((CCLayer*)(nodeVersionOfMainLayer))->transform();
+
 
 
 	//create the fade in action
